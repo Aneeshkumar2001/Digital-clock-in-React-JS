@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { useState, useEffect } from "react";
 import './App.css';
 
 function App() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+
+    return () => clearInterval(timerId);
+  }, []);
+
+  
+  const formattedTime = currentTime.toLocaleTimeString();
+  const formattedDate = currentTime.toLocaleDateString();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="digital-clock">
+      <h1>Digital Clock</h1>
+      <div className="time">{formattedTime}</div>
+      <div className="date">{formattedDate}</div>
     </div>
   );
 }
